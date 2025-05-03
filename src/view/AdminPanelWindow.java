@@ -122,7 +122,7 @@ public class AdminPanelWindow {
         });
 
         Scene scene = new Scene(root, 500, 750);
-        scene.getStylesheets().add(getClass().getResource("\"/resources/css/style.css\"").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

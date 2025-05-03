@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.control.Label;
 import network.ClientNetwork;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

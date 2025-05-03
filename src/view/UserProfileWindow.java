@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -13,10 +14,12 @@ public class UserProfileWindow {
 
     private Stage stage;
     private User user;
+    private Runnable onBackAction;
 
-    public UserProfileWindow(Stage stage, User user) {
+    public UserProfileWindow(Stage stage, User user, Runnable onBackAction) {
         this.stage = stage;
         this.user = user;
+        this.onBackAction = onBackAction;
     }
 
     public void show() {
@@ -32,12 +35,14 @@ public class UserProfileWindow {
 
         Label emailLabel = new Label("Email: " + user.getEmail());
         emailLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: #555555;");
+        Button backButton = util.NavigationHelper.createBackButton(stage, onBackAction);
 
         // Основной контейнер с отступами
-        VBox layout = new VBox(15, titleLabel, nameLabel, emailLabel);
+        VBox layout = new VBox(15, titleLabel, nameLabel, emailLabel, backButton);
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #f5f5f5; -fx-border-radius: 10px; -fx-background-radius: 10px;");
+
 
         // Создание сцены
         Scene scene = new Scene(layout, 350, 200, Color.WHITE);

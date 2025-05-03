@@ -2,6 +2,7 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -16,11 +17,13 @@ public class PurchasedBooksWindow {
     private Stage stage;
     private String username;
     private ClientNetwork clientNetwork;
+    private Runnable onBackAction;
 
-    public PurchasedBooksWindow(Stage stage, String username, ClientNetwork clientNetwork) {
+    public PurchasedBooksWindow(Stage stage, String username, ClientNetwork clientNetwork, Runnable onBackAction) {
         this.stage = stage;
         this.username = username;
         this.clientNetwork = clientNetwork;
+        this.onBackAction = onBackAction;
     }
 
     public void show() {
@@ -44,8 +47,10 @@ public class PurchasedBooksWindow {
         // Список покупок
         listView.setStyle("-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 1px; -fx-font-size: 14px;");
 
+        Button backButton = util.NavigationHelper.createBackButton(stage, onBackAction);
+
         // Добавление элементов на панель
-        vbox.getChildren().addAll(title, listView);
+        vbox.getChildren().addAll(title, listView, backButton);
 
         // Настройка сцены
         Scene scene = new Scene(vbox, 400, 300);

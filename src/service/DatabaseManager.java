@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DatabaseManager {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/BookStore";
+    private static final String URL = "jdbc:postgresql://localhost:5433/BookStore";
     private static final String USER = "postgres";
     private static final String PASSWORD = "a200525d";
 

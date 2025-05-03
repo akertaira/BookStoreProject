@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -16,13 +17,15 @@ public class RegionSelectionWindow {
     private Stage stage;
     private String username;
     private ClientNetwork clientNetwork;
+    private Runnable onBackAction;
 
-    private List<String> regions = List.of("Регион 1", "Регион 2", "Регион 3");
+    private List<String> regions = List.of("Almaty");
 
-    public RegionSelectionWindow(Stage stage, String username, ClientNetwork clientNetwork) {
+    public RegionSelectionWindow(Stage stage, String username, ClientNetwork clientNetwork, Runnable onBackAction) {
         this.stage = stage;
         this.username = username;
         this.clientNetwork = clientNetwork;
+        this.onBackAction = onBackAction;
     }
 
     public void show() {
@@ -44,9 +47,10 @@ public class RegionSelectionWindow {
             regionButton.setOnAction(e -> showBooksByRegion(region));
             vbox.getChildren().add(regionButton);
         }
+        Button backButton = util.NavigationHelper.createBackButton(stage, onBackAction);
 
         // Добавление заголовка и кнопок в интерфейс
-        vbox.getChildren().add(0, title);
+        vbox.getChildren().addAll(0, List.of(title, backButton));
 
         // Сцена
         Scene scene = new Scene(vbox, 350, 300);
@@ -56,7 +60,7 @@ public class RegionSelectionWindow {
 
     private void showBooksByRegion(String region) {
         List<Book> books = clientNetwork.getBooksByRegion(region);
-        BooksListWindow booksListWindow = new BooksListWindow(books);
+        BooksListWindow booksListWindow = new BooksListWindow(books, this::show);
         booksListWindow.show(); // метод show() должен быть в BooksListWindow
     }
 }
